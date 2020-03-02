@@ -114,5 +114,19 @@ namespace WebApplicationApiChrysallis.Controllers
         {
             return db.socios.Count(e => e.id == id) > 0;
         }
+
+        [HttpGet]
+        [Route("api/Socios/{telefono}/{password}")]
+        public IHttpActionResult TemasByDescription(String telefono,String password)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            socios _socio = (
+                from s in db.socios
+                where s.telefono.Equals(telefono) && s.password.Equals(password)
+                select s).FirstOrDefault();
+
+            return Ok(_socio);
+        }
     }
 }

@@ -9,6 +9,12 @@ namespace WebApplicationApiChrysallis
     {
         public static void Register(HttpConfiguration config)
         {
+            //Control de referencias circulares a objetos
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling =
+                Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            // Remove the XML formatter
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
             // Configuración y servicios de API web
 
             // Rutas de API web
