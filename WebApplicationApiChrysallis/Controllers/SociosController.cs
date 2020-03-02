@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplicationApiChrysallis;
+using WebApplicationApiChrysallis.Utilidades;
 
 namespace WebApplicationApiChrysallis.Controllers
 {
@@ -19,6 +21,7 @@ namespace WebApplicationApiChrysallis.Controllers
         // GET: api/Socios
         public IQueryable<socios> Getsocios()
         {
+            db.Configuration.LazyLoadingEnabled = false;
             return db.socios;
         }
 
@@ -26,19 +29,28 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(socios))]
         public IHttpActionResult Getsocios(int id)
         {
-            socios socios = db.socios.Find(id);
-            if (socios == null)
-            {
-                return NotFound();
-            }
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
 
-            return Ok(socios);
+            socios _socio = (from s in db.socios
+                             where s.id == id
+                             select s).FirstOrDefault();
+            if (_socio == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_socio);
+            }
+            return result;
         }
 
         // PUT: api/Socios/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Putsocios(int id, socios socios)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -55,7 +67,7 @@ namespace WebApplicationApiChrysallis.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!sociosExists(id))
                 {
@@ -63,8 +75,16 @@ namespace WebApplicationApiChrysallis.Controllers
                 }
                 else
                 {
-                    throw;
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
                 }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -74,14 +94,23 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(socios))]
         public IHttpActionResult Postsocios(socios socios)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             db.socios.Add(socios);
-            db.SaveChanges();
-
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
             return CreatedAtRoute("DefaultApi", new { id = socios.id }, socios);
         }
 
@@ -89,16 +118,26 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(socios))]
         public IHttpActionResult Deletesocios(int id)
         {
-            socios socios = db.socios.Find(id);
-            if (socios == null)
+            socios _socio = db.socios.Find(id);
+            String mensaje;
+            if (_socio == null)
             {
                 return NotFound();
             }
 
-            db.socios.Remove(socios);
-            db.SaveChanges();
+            db.socios.Remove(_socio);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
 
-            return Ok(socios);
+            return Ok(_socio);
         }
 
         protected override void Dispose(bool disposing)
@@ -117,7 +156,7 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Socios/{telefono}/{password}")]
-        public IHttpActionResult TemasByDescription(String telefono,String password)
+        public IHttpActionResult SocioLogin(String telefono,String password)
         {
             db.Configuration.LazyLoadingEnabled = false;
 
