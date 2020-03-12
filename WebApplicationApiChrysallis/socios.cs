@@ -17,8 +17,8 @@ namespace WebApplicationApiChrysallis
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public socios()
         {
-            this.asistir = new HashSet<asistir>();
             this.comunidades1 = new HashSet<comunidades>();
+            this.asistir = new HashSet<asistir>();
         }
     
         public int id { get; set; }
@@ -35,10 +35,10 @@ namespace WebApplicationApiChrysallis
         public Nullable<int> id_comunidad { get; set; }
         public byte[] imagenUsuario { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<asistir> asistir { get; set; }
         public virtual comunidades comunidades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<comunidades> comunidades1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<asistir> asistir { get; set; }
     }
 }

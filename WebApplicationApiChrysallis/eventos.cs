@@ -17,8 +17,8 @@ namespace WebApplicationApiChrysallis
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public eventos()
         {
-            this.asistir = new HashSet<asistir>();
             this.documentos = new HashSet<documentos>();
+            this.asistir = new HashSet<asistir>();
             this.notificaciones = new HashSet<notificaciones>();
         }
     
@@ -34,11 +34,11 @@ namespace WebApplicationApiChrysallis
         public string descripcion { get; set; }
         public string nombreImagen { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<asistir> asistir { get; set; }
         public virtual comunidades comunidades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<documentos> documentos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<asistir> asistir { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notificaciones> notificaciones { get; set; }
     }
