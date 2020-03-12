@@ -36,6 +36,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
           <Property Name="documento" Type="varbinary(max)" Nullable="false" />
           <Property Name="id_evento" Type="int" Nullable="false" />
         </EntityType>
@@ -52,6 +53,7 @@
           <Property Name="fechaLimite" Type="date" />
           <Property Name="numAsistentes" Type="int" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="nombreImagen" Type="varchar" MaxLength="16" />
           <Property Name="id_comunidad" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="notificaciones">
@@ -59,7 +61,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="antelacion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="antelacion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="notificaciones_eventos">
           <Key>
@@ -84,6 +86,7 @@
           <Property Name="administrador" Type="bit" Nullable="false" />
           <Property Name="idiomaDefecto" Type="varchar" MaxLength="20" />
           <Property Name="estatal" Type="bit" Nullable="false" />
+          <Property Name="imagenUsuario" Type="varbinary(max)" />
           <Property Name="id_comunidad" Type="int" />
         </EntityType>
         <Association Name="FK_asistir_eventos">
@@ -139,7 +142,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_documentos_eventos">
-          <End Role="eventos" Type="Self.eventos" Multiplicity="1" />
+          <End Role="eventos" Type="Self.eventos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="eventos">
@@ -283,6 +288,7 @@
           <Property Name="documento" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="id_evento" Type="Int32" Nullable="false" />
           <NavigationProperty Name="eventos" Relationship="Self.FK_documentos_eventos" FromRole="documentos" ToRole="eventos" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="eventos">
           <Key>
@@ -302,13 +308,14 @@
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="nombreImagen" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="notificaciones">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="antelacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="antelacion" Type="String" Nullable="false" />
           <NavigationProperty Name="eventos" Relationship="Self.notificaciones_eventos" FromRole="notificaciones" ToRole="eventos" />
         </EntityType>
         <EntityType Name="socios">
@@ -330,6 +337,7 @@
           <NavigationProperty Name="asistir" Relationship="Self.FK_asistir_socios" FromRole="socios" ToRole="asistir" />
           <NavigationProperty Name="comunidades" Relationship="Self.FK_socios_comunidades" FromRole="socios" ToRole="comunidades" />
           <NavigationProperty Name="comunidades1" Relationship="Self.comunidades_socios" FromRole="socios" ToRole="comunidades" />
+          <Property Name="imagenUsuario" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_asistir_eventos">
           <End Role="eventos" Type="Self.eventos" Multiplicity="1" />
@@ -463,6 +471,7 @@
           <EntitySetMapping Name="documentos">
             <EntityTypeMapping TypeName="chrysallisModel.documentos">
               <MappingFragment StoreEntitySet="documentos">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="documento" ColumnName="documento" />
                 <ScalarProperty Name="id_evento" ColumnName="id_evento" />
@@ -472,6 +481,7 @@
           <EntitySetMapping Name="eventos">
             <EntityTypeMapping TypeName="chrysallisModel.eventos">
               <MappingFragment StoreEntitySet="eventos">
+                <ScalarProperty Name="nombreImagen" ColumnName="nombreImagen" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="imagen" ColumnName="imagen" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -496,6 +506,7 @@
           <EntitySetMapping Name="socios">
             <EntityTypeMapping TypeName="chrysallisModel.socios">
               <MappingFragment StoreEntitySet="socios">
+                <ScalarProperty Name="imagenUsuario" ColumnName="imagenUsuario" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
