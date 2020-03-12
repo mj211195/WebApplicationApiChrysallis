@@ -33,6 +33,7 @@ namespace WebApplicationApiChrysallis
         public string idiomaDefecto { get; set; }
         public bool estatal { get; set; }
         public Nullable<int> id_comunidad { get; set; }
+        public byte[] imagenUsuario { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<asistir> asistir { get; set; }

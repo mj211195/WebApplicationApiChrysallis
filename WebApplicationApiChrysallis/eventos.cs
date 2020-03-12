@@ -32,6 +32,7 @@ namespace WebApplicationApiChrysallis
         public string nombre { get; set; }
         public byte[] imagen { get; set; }
         public string descripcion { get; set; }
+        public string nombreImagen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<asistir> asistir { get; set; }
