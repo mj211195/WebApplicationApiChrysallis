@@ -167,5 +167,19 @@ namespace WebApplicationApiChrysallis.Controllers
 
             return Ok(_socio);
         }
+
+        [HttpGet]
+        [Route("api/Socios/busquedaRecuperar/{telefono}/{mail}")]
+        public IHttpActionResult SocioRecuperar(String telefono, String mail)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            socios _socio = (
+                from s in db.socios
+                where s.telefono.Equals(telefono) && s.mail.Equals(mail)
+                select s).FirstOrDefault();
+
+            return Ok(_socio);
+        }
     }
 }
