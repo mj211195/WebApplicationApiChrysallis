@@ -133,14 +133,14 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
         [HttpGet]
-        [Route("api/Eventos/{nombre}/{id_comunidad}")]
-        public IHttpActionResult busquedaEventos(String nombre,int id_comunidad)
+        [Route("api/Eventos/SearchNC/{nombre}/{id_comunidad}")]
+        public IHttpActionResult busquedaEventosNombreComunidad(String nombre,int id_comunidad)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
                 from e in db.eventos
-                where e.id_comunidad == id_comunidad && e.nombre.Equals(nombre)
+                where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre)
                 select e).ToList();
 
             if (_eventos == null)
@@ -157,7 +157,7 @@ namespace WebApplicationApiChrysallis.Controllers
 
 
         [HttpGet]
-        [Route("api/Eventos/com/{id_comunidad}")]
+        [Route("api/Eventos/SearchC/{id_comunidad}")]
         public IHttpActionResult busquedaEventosComunidad(int id_comunidad)
         {
             IHttpActionResult result;
@@ -165,6 +165,52 @@ namespace WebApplicationApiChrysallis.Controllers
             List<eventos> _eventos = (
                 from e in db.eventos
                 where e.id_comunidad == id_comunidad
+                select e).ToList();
+
+            if (_eventos == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
+            }
+            return result;
+        }
+
+
+        [HttpGet]
+        [Route("api/Eventos/SearchCD/{id_comunidad}/{date}")]
+        public IHttpActionResult busquedaEventosComDate(int id_comunidad, DateTime date)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<eventos> _eventos = (
+                from e in db.eventos
+                where e.id_comunidad == id_comunidad && e.fecha.Equals(date)
+                select e).ToList();
+
+            if (_eventos == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
+            }
+            return result;
+        }
+
+
+        [HttpGet]
+        [Route("api/Eventos/Search/{nombre}/{id_comunidad}/{date}")]
+        public IHttpActionResult busquedaEventosAll(String nombre, int id_comunidad, DateTime date)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<eventos> _eventos = (
+                from e in db.eventos
+                where e.nombre.Contains(nombre) && e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
             if (_eventos == null)
