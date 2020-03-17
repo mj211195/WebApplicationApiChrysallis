@@ -144,5 +144,19 @@ namespace WebApplicationApiChrysallis.Controllers
 
             return Ok(_eventos);
         }
+
+
+        [HttpGet]
+        [Route("api/Eventos/com/{id_comunidad}")]
+        public IHttpActionResult busquedaEventosComunidad(int id_comunidad)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            List<eventos> _eventos = (
+                from e in db.eventos
+                where e.id_comunidad == id_comunidad
+                select e).ToList();
+
+            return Ok(_eventos);
+        }
     }
 }
