@@ -136,13 +136,23 @@ namespace WebApplicationApiChrysallis.Controllers
         [Route("api/Eventos/{nombre}/{id_comunidad}")]
         public IHttpActionResult busquedaEventos(String nombre,int id_comunidad)
         {
+            IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
                 from e in db.eventos
                 where e.id_comunidad == id_comunidad && e.nombre.Equals(nombre)
                 select e).ToList();
 
-            return Ok(_eventos);
+            if (_eventos == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
+            }
+
+            return result;
         }
 
 
@@ -150,13 +160,22 @@ namespace WebApplicationApiChrysallis.Controllers
         [Route("api/Eventos/com/{id_comunidad}")]
         public IHttpActionResult busquedaEventosComunidad(int id_comunidad)
         {
+            IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
                 from e in db.eventos
                 where e.id_comunidad == id_comunidad
                 select e).ToList();
 
-            return Ok(_eventos);
+            if (_eventos == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
+            }
+            return result;
         }
     }
 }
