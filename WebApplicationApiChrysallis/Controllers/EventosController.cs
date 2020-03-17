@@ -133,13 +133,13 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
         [HttpGet]
-        [Route("api/Eventos/{id_comunidad}")]
-        public IHttpActionResult busquedaEventos(int id_comunidad)
+        [Route("api/Eventos/{nombre}/{id_comunidad}")]
+        public IHttpActionResult busquedaEventos(String nombre,int id_comunidad)
         {
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
                 from e in db.eventos
-                where e.id_comunidad == id_comunidad
+                where e.id_comunidad == id_comunidad && e.nombre.Equals(nombre)
                 select e).ToList();
 
             return Ok(_eventos);
