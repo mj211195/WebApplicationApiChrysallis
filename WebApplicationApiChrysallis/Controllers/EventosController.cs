@@ -139,7 +139,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
-                from e in db.eventos
+                from e in db.eventos.Include("comunidades")
                 where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre)
                 select e).ToList();
 
@@ -163,7 +163,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos
+                from e in db.eventos.Include("comunidades")
                 where e.id_comunidad == id_comunidad
                 select e).ToList();
 
@@ -186,7 +186,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos
+                from e in db.eventos.Include("comunidades")
                 where e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
@@ -209,7 +209,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos
+                from e in db.eventos.Include("comunidades")
                 where e.nombre.Contains(nombre) && e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
