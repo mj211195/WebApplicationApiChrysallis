@@ -37,14 +37,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="imagen" Type="varbinary(max)" />
           <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="ubicacion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="hora" Type="time" Precision="7" Nullable="false" />
           <Property Name="fechaLimite" Type="date" />
           <Property Name="numAsistentes" Type="int" Nullable="false" />
-          <Property Name="descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
           <Property Name="nombreImagen" Type="varchar" MaxLength="16" />
           <Property Name="id_comunidad" Type="int" Nullable="false" />
         </EntityType>
@@ -70,10 +70,10 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dni" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="telefono" Type="varchar" MaxLength="11" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="apellidos" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="apellidos" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
-          <Property Name="mail" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="mail" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="administrador" Type="bit" Nullable="false" />
           <Property Name="idiomaDefecto" Type="varchar" MaxLength="20" />
@@ -281,14 +281,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ubicacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="hora" Type="Time" Nullable="false" Precision="7" />
           <Property Name="fechaLimite" Type="DateTime" Precision="0" />
           <Property Name="numAsistentes" Type="Int32" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="nombreImagen" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="id_comunidad" Type="Int32" Nullable="false" />
           <NavigationProperty Name="asistir" Relationship="chrysallisModel.FK_asistir_eventos" FromRole="eventos" ToRole="asistir" />
@@ -311,10 +311,10 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="dni" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="telefono" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="apellidos" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
-          <Property Name="mail" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="administrador" Type="Boolean" Nullable="false" />
           <Property Name="idiomaDefecto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />

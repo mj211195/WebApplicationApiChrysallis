@@ -27,19 +27,11 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(eventos))]
         public IHttpActionResult Geteventos(int id)
         {
-            //eventos eventos = db.eventos.Find(id);
-            //if (eventos == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return Ok(eventos);
-
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
 
-            eventos _evento = (from e in db.eventos.Include("comunidades")
-                             where e.id == id
+            eventos _evento = (from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
+                               where e.id == id
                              select e).FirstOrDefault();
             if (_evento == null)
             {
@@ -139,7 +131,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
-                from e in db.eventos.Include("comunidades")
+                from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
                 where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre)
                 select e).ToList();
 
@@ -163,7 +155,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades")
+                from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
                 where e.id_comunidad == id_comunidad
                 select e).ToList();
 
@@ -186,7 +178,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades")
+                from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
                 where e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
@@ -209,7 +201,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades")
+                from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
                 where e.nombre.Contains(nombre) && e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
