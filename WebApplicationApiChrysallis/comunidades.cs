@@ -19,7 +19,6 @@ namespace WebApplicationApiChrysallis
         {
             this.eventos = new HashSet<eventos>();
             this.socios = new HashSet<socios>();
-            this.socios1 = new HashSet<socios>();
         }
     
         public int id { get; set; }
@@ -29,7 +28,5 @@ namespace WebApplicationApiChrysallis
         public virtual ICollection<eventos> eventos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<socios> socios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<socios> socios1 { get; set; }
     }
 }
