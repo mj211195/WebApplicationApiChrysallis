@@ -168,6 +168,7 @@
     <Compile Include="comunidades.cs">
       <DependentUpon>ModelChrysallis.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AsistirController.cs" />
     <Compile Include="Controllers\ComunidadesController.cs" />
     <Compile Include="Controllers\EventosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

@@ -169,8 +169,8 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
         [HttpGet]
-        [Route("api/Socios/busquedaRecuperar/{telefono}/{mail}")]
-        public IHttpActionResult SocioRecuperar(String telefono, String mail)
+        [Route("api/Socios/busquedaRecuperar/{mail}/{telefono}")]
+        public IHttpActionResult SocioRecuperar(String mail,String telefono)
         {
             db.Configuration.LazyLoadingEnabled = false;
 
