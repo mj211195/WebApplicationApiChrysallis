@@ -172,6 +172,7 @@
     <Compile Include="Controllers\ComunidadesController.cs" />
     <Compile Include="Controllers\EventosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MensajesController.cs" />
     <Compile Include="Controllers\SociosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="documentos.cs">
@@ -182,6 +183,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="mensajes.cs">
+      <DependentUpon>ModelChrysallis.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelChrysallis.Context.cs">
       <AutoGen>True</AutoGen>

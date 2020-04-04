@@ -14,68 +14,82 @@ using WebApplicationApiChrysallis.Utilidades;
 
 namespace WebApplicationApiChrysallis.Controllers
 {
-    public class AsistirController : ApiController
+    public class MensajesController : ApiController
     {
         private chrysallisEntities db = new chrysallisEntities();
 
-        // GET: api/Asistir
-        public IQueryable<asistir> Getasistir()
+        // GET: api/Mensajes
+        public IQueryable<mensajes> Getmensajes()
         {
             db.Configuration.LazyLoadingEnabled = false;
-            return db.asistir;
+            return db.mensajes;
         }
 
-        // GET: api/Asistir/5
-        [ResponseType(typeof(asistir))]
-        public IHttpActionResult Getasistir(int id)
+        // GET: api/Mensajes/5
+        [ResponseType(typeof(mensajes))]
+        public IHttpActionResult Getmensajes(int id)
         {
-            asistir asistir = db.asistir.Find(id);
-            if (asistir == null)
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            mensajes _mensaje = db.mensajes.Find(id);
+            if (_mensaje == null)
             {
-                return NotFound();
+                result = NotFound();
             }
-
-            return Ok(asistir);
+            else
+            {
+                result = Ok(_mensaje);
+            }
+            return result;
         }
 
-        // PUT: api/Asistir/5
+        // PUT: api/Mensajes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putasistir(int id, asistir asistir)
+        public IHttpActionResult Putmensajes(int id, mensajes mensajes)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != asistir.id_socio)
+            if (id != mensajes.id)
             {
                 return BadRequest();
             }
 
-            db.Entry(asistir).State = EntityState.Modified;
+            db.Entry(mensajes).State = EntityState.Modified;
 
             try
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                if (!asistirExists(id))
+                if (!mensajesExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
                 }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Asistir
-        [ResponseType(typeof(asistir))]
-        public IHttpActionResult Postasistir(asistir asistir)
+        // POST: api/Mensajes
+        [ResponseType(typeof(mensajes))]
+        public IHttpActionResult Postmensajes(mensajes mensajes)
         {
             String mensaje;
             if (!ModelState.IsValid)
@@ -83,7 +97,7 @@ namespace WebApplicationApiChrysallis.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.asistir.Add(asistir);
+            db.mensajes.Add(mensajes);
             try
             {
                 db.SaveChanges();
@@ -94,22 +108,21 @@ namespace WebApplicationApiChrysallis.Controllers
                 mensaje = Utilidad.MensajeError(sqlExc);
                 return BadRequest(mensaje);
             }
-
-            return CreatedAtRoute("DefaultApi", new { id = asistir.id_socio }, asistir);
+            return CreatedAtRoute("DefaultApi", new { id = mensajes.id }, mensajes);
         }
 
-        // DELETE: api/Asistir/5
-        [ResponseType(typeof(asistir))]
-        public IHttpActionResult Deleteasistir(int id)
+        // DELETE: api/Mensajes/5
+        [ResponseType(typeof(mensajes))]
+        public IHttpActionResult Deletemensajes(int id)
         {
-            asistir _asistir = db.asistir.Find(id);
+            mensajes _mensaje = db.mensajes.Find(id);
             String mensaje;
-            if (_asistir == null)
+            if (_mensaje == null)
             {
                 return NotFound();
             }
 
-            db.asistir.Remove(_asistir);
+            db.mensajes.Remove(_mensaje);
             try
             {
                 db.SaveChanges();
@@ -121,7 +134,7 @@ namespace WebApplicationApiChrysallis.Controllers
                 return BadRequest(mensaje);
             }
 
-            return Ok(_asistir);
+            return Ok(_mensaje);
         }
 
         protected override void Dispose(bool disposing)
@@ -133,9 +146,9 @@ namespace WebApplicationApiChrysallis.Controllers
             base.Dispose(disposing);
         }
 
-        private bool asistirExists(int id)
+        private bool mensajesExists(int id)
         {
-            return db.asistir.Count(e => e.id_socio == id) > 0;
+            return db.mensajes.Count(e => e.id == id) > 0;
         }
     }
 }

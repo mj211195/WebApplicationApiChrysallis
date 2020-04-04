@@ -17,6 +17,9 @@
         <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="3" PointY="2.625" />
         <AssociationConnector Association="chrysallisModel.FK_asistir_socios" />
         <AssociationConnector Association="chrysallisModel.FK_socios_comunidades" />
+        <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="5.25" PointY="3.125" />
+        <AssociationConnector Association="chrysallisModel.FK_mensajes_eventos" />
+        <AssociationConnector Association="chrysallisModel.FK_mensajes_socios" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

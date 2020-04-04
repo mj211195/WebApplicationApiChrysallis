@@ -20,6 +20,7 @@ namespace WebApplicationApiChrysallis
             this.asistir = new HashSet<asistir>();
             this.documentos = new HashSet<documentos>();
             this.notificaciones = new HashSet<notificaciones>();
+            this.mensajes = new HashSet<mensajes>();
         }
     
         public int id { get; set; }
@@ -41,5 +42,7 @@ namespace WebApplicationApiChrysallis
         public virtual ICollection<documentos> documentos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notificaciones> notificaciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mensajes> mensajes { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
 
-            socios _socio = (from s in db.socios.Include("comunidades")
+            socios _socio = (from s in db.socios.Include("comunidades").Include("asistir")
                              where s.id == id
                              select s).FirstOrDefault();
             if (_socio == null)
