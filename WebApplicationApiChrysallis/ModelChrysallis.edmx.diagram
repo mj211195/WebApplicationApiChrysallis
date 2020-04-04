@@ -10,13 +10,13 @@
         <EntityTypeShape EntityType="chrysallisModel.documentos" Width="1.5" PointX="5.25" PointY="13.125" />
         <EntityTypeShape EntityType="chrysallisModel.eventos" Width="1.5" PointX="3" PointY="7.875" />
         <EntityTypeShape EntityType="chrysallisModel.notificaciones" Width="1.5" PointX="5.25" PointY="10.75" />
-        <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="3" PointY="3" />
         <AssociationConnector Association="chrysallisModel.FK_asistir_eventos" />
-        <AssociationConnector Association="chrysallisModel.FK_asistir_socios" />
         <AssociationConnector Association="chrysallisModel.FK_eventos_comunidades" />
-        <AssociationConnector Association="chrysallisModel.FK_socios_comunidades" />
         <AssociationConnector Association="chrysallisModel.FK_documentos_eventos" />
         <AssociationConnector Association="chrysallisModel.notificaciones_eventos" />
+        <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="3" PointY="2.625" />
+        <AssociationConnector Association="chrysallisModel.FK_asistir_socios" />
+        <AssociationConnector Association="chrysallisModel.FK_socios_comunidades" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
