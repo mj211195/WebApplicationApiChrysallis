@@ -161,7 +161,7 @@ namespace WebApplicationApiChrysallis.Controllers
             db.Configuration.LazyLoadingEnabled = false;
 
             socios _socio = (
-                from s in db.socios
+                from s in db.socios.Include("comunidades").Include("asistir")
                 where s.telefono.Equals(telefono) && s.password.Equals(password)
                 select s).FirstOrDefault();
 
