@@ -28,9 +28,9 @@ namespace WebApplicationApiChrysallis
         public virtual DbSet<asistir> asistir { get; set; }
         public virtual DbSet<comunidades> comunidades { get; set; }
         public virtual DbSet<documentos> documentos { get; set; }
-        public virtual DbSet<eventos> eventos { get; set; }
         public virtual DbSet<notificaciones> notificaciones { get; set; }
         public virtual DbSet<socios> socios { get; set; }
         public virtual DbSet<mensajes> mensajes { get; set; }
+        public virtual DbSet<eventos> eventos { get; set; }
     }
 }
