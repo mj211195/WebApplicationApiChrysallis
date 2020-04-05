@@ -25,7 +25,7 @@ namespace WebApplicationApiChrysallis
     
         public int id { get; set; }
         public string nombre { get; set; }
-        public byte[] imagen { get; set; }
+        public string imagen { get; set; }
         public System.DateTime fecha { get; set; }
         public string ubicacion { get; set; }
         public System.TimeSpan hora { get; set; }
