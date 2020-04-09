@@ -125,14 +125,14 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
         [HttpGet]
-        [Route("api/Eventos/SearchNC/{nombre}/{id_comunidad}")]
-        public IHttpActionResult busquedaEventosNombreComunidad(String nombre,int id_comunidad)
+        [Route("api/Eventos/SearchNC/{nombre}/{id_comunidad}/{date}")]
+        public IHttpActionResult busquedaEventosNombreComunidad(String nombre,int id_comunidad, DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
                 from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
-                where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre)
+                where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre) && e.fecha >= date
                 select e).ToList();
 
             if (_eventos == null)
@@ -148,27 +148,7 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
 
-        [HttpGet]
-        [Route("api/Eventos/SearchC/{id_comunidad}")]
-        public IHttpActionResult busquedaEventosComunidad(int id_comunidad)
-        {
-            IHttpActionResult result;
-            db.Configuration.LazyLoadingEnabled = false;
-            List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
-                where e.id_comunidad == id_comunidad
-                select e).ToList();
-
-            if (_eventos == null)
-            {
-                result = NotFound();
-            }
-            else
-            {
-                result = Ok(_eventos);
-            }
-            return result;
-        }
+       
 
 
         [HttpGet]
@@ -218,8 +198,8 @@ namespace WebApplicationApiChrysallis.Controllers
 
 
         [HttpGet]
-        [Route("api/Eventos/SearchCDates/{id_comunidad}/{date}")]
-        public IHttpActionResult busquedaEventosComDates(int id_comunidad, DateTime date)
+        [Route("api/Eventos/SearchC/{id_comunidad}/{date}")]
+        public IHttpActionResult busquedaEventosComunidad(int id_comunidad, DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
