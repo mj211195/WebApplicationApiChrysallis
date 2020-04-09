@@ -215,5 +215,28 @@ namespace WebApplicationApiChrysallis.Controllers
             }
             return result;
         }
+
+
+        [HttpGet]
+        [Route("api/Eventos/SearchCDates/{id_comunidad}/{date}")]
+        public IHttpActionResult busquedaEventosComDates(int id_comunidad, DateTime date)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<eventos> _eventos = (
+                from e in db.eventos.Include("comunidades").Include("documentos").Include("asistir").Include("notificaciones")
+                where e.id_comunidad == id_comunidad && e.fecha >= date
+                select e).ToList();
+
+            if (_eventos == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
+            }
+            return result;
+        }
     }
 }
