@@ -116,14 +116,14 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
         [HttpGet]
-        [Route("api/Documentos/{id}/{id_evento}")]
-        public IHttpActionResult busquedaDocumentosEvento(int id, int id_evento)
+        [Route("api/Documentos/SearchEvent/{id_evento}")]
+        public IHttpActionResult busquedaDocumentosEvento(int id_evento)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<documentos> _documentos = (
                 from d in db.documentos
-                where d.id == id && d.id_evento == id_evento
+                where d.id_evento == id_evento
                 select d).ToList();
 
             if (_documentos == null)
