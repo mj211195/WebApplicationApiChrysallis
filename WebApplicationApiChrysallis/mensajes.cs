@@ -17,10 +17,10 @@ namespace WebApplicationApiChrysallis
         public int id { get; set; }
         public int id_socio { get; set; }
         public int id_evento { get; set; }
-        public byte[] mensaje { get; set; }
+        public string mensaje { get; set; }
         public System.DateTime fecha { get; set; }
     
-        public virtual socios socios { get; set; }
         public virtual eventos eventos { get; set; }
+        public virtual socios socios { get; set; }
     }
 }

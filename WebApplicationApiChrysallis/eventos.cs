@@ -18,8 +18,8 @@ namespace WebApplicationApiChrysallis
         public eventos()
         {
             this.asistir = new HashSet<asistir>();
-            this.mensajes = new HashSet<mensajes>();
             this.notificaciones = new HashSet<notificaciones>();
+            this.mensajes = new HashSet<mensajes>();
             this.documentos = new HashSet<documentos>();
         }
     
@@ -39,9 +39,9 @@ namespace WebApplicationApiChrysallis
         public virtual ICollection<asistir> asistir { get; set; }
         public virtual comunidades comunidades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<mensajes> mensajes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notificaciones> notificaciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mensajes> mensajes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<documentos> documentos { get; set; }
     }
