@@ -55,7 +55,7 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="id_socio" Type="int" Nullable="false" />
           <Property Name="id_evento" Type="int" Nullable="false" />
-          <Property Name="mensaje" Type="varbinary" MaxLength="500" Nullable="false" />
+          <Property Name="mensaje" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="notificaciones">
@@ -427,7 +427,7 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="id_socio" Type="Int32" Nullable="false" />
           <Property Name="id_evento" Type="Int32" Nullable="false" />
-          <Property Name="mensaje" Type="String" Nullable="false" MaxLength="500" FixedLength="false" />
+          <Property Name="mensaje" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="eventos" Relationship="chrysallisModel.FK_mensajes_eventos" FromRole="mensajes" ToRole="eventos" />
           <NavigationProperty Name="socios" Relationship="chrysallisModel.FK_mensajes_socios" FromRole="mensajes" ToRole="socios" />
