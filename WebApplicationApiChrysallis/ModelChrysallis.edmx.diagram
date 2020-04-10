@@ -7,7 +7,6 @@
       <Diagram DiagramId="449b1c6c60c5492a9e7ac2c5d791107e" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="chrysallisModel.asistir" Width="1.5" PointX="7.25" PointY="5.5" />
         <EntityTypeShape EntityType="chrysallisModel.comunidades" Width="1.5" PointX="0.75" PointY="8.375" />
-        <EntityTypeShape EntityType="chrysallisModel.documentos" Width="1.5" PointX="0.5" PointY="12.125" />
         <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="5.25" PointY="6.875" />
         <EntityTypeShape EntityType="chrysallisModel.notificaciones" Width="1.5" PointX="5.5" PointY="13" />
         <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="3" PointY="4.75" />
@@ -17,9 +16,10 @@
         <EntityTypeShape EntityType="chrysallisModel.eventos" Width="1.5" PointX="3" PointY="10.25" />
         <AssociationConnector Association="chrysallisModel.FK_asistir_eventos" />
         <AssociationConnector Association="chrysallisModel.FK_eventos_comunidades" />
-        <AssociationConnector Association="chrysallisModel.FK_documentos_eventos" />
         <AssociationConnector Association="chrysallisModel.FK_mensajes_eventos" />
         <AssociationConnector Association="chrysallisModel.notificaciones_eventos" />
+        <EntityTypeShape EntityType="chrysallisModel.documentos" Width="1.5" PointX="5.25" PointY="16.25" />
+        <AssociationConnector Association="chrysallisModel.FK_documentos_eventos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
