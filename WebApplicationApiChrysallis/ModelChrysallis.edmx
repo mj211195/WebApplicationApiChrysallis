@@ -30,7 +30,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="100" />
           <Property Name="id_evento" Type="int" />
-          <Property Name="documento" Type="varbinary(max)" />
+          <Property Name="documento" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="eventos">
           <Key>
@@ -55,7 +55,7 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="id_socio" Type="int" Nullable="false" />
           <Property Name="id_evento" Type="int" Nullable="false" />
-          <Property Name="mensaje" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="mensaje" Type="varbinary" MaxLength="500" Nullable="false" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="notificaciones">
@@ -427,7 +427,7 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="id_socio" Type="Int32" Nullable="false" />
           <Property Name="id_evento" Type="Int32" Nullable="false" />
-          <Property Name="mensaje" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="mensaje" Type="String" Nullable="false" MaxLength="500" FixedLength="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="eventos" Relationship="chrysallisModel.FK_mensajes_eventos" FromRole="mensajes" ToRole="eventos" />
           <NavigationProperty Name="socios" Relationship="chrysallisModel.FK_mensajes_socios" FromRole="mensajes" ToRole="socios" />
@@ -463,7 +463,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="id_evento" Type="Int32" />
-          <Property Name="documento" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="documento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="eventos" Relationship="chrysallisModel.FK_documentos_eventos" FromRole="documentos" ToRole="eventos" />
         </EntityType>
         <Association Name="FK_documentos_eventos">
