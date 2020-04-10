@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Controllers\AsistirController.cs" />
     <Compile Include="Controllers\ComunidadesController.cs" />
+    <Compile Include="Controllers\DocumentosController.cs" />
     <Compile Include="Controllers\EventosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MensajesController.cs" />
