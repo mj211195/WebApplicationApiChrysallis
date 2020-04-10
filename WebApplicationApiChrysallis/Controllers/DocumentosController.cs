@@ -19,6 +19,7 @@ namespace WebApplicationApiChrysallis.Controllers
         // GET: api/Documentos
         public IQueryable<documentos> Getdocumentos()
         {
+            db.Configuration.LazyLoadingEnabled = false;
             return db.documentos;
         }
 
@@ -26,13 +27,22 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(documentos))]
         public IHttpActionResult Getdocumentos(int id)
         {
-            documentos documentos = db.documentos.Find(id);
-            if (documentos == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(documentos);
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+
+            documentos _documento= (from d in db.documentos
+                               where d.id == id
+                               select d).FirstOrDefault();
+            if (_documento == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_documento);
+            }
+            return result;
         }
 
         // PUT: api/Documentos/5

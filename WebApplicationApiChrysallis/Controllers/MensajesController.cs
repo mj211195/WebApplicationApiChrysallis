@@ -150,5 +150,27 @@ namespace WebApplicationApiChrysallis.Controllers
         {
             return db.mensajes.Count(e => e.id == id) > 0;
         }
+
+        [HttpGet]
+        [Route("api/Mensajes/SearchByEvent/{id_evento}")]
+        public IHttpActionResult getMensajesByEvent(int id_evento)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<mensajes> _mensajes = (
+                from m in db.mensajes.Include("socios")
+                where m.id_evento == id_evento
+                select m).ToList();
+
+            if (_mensajes == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_mensajes);
+            }
+            return result;
+        }
     }
 }
