@@ -27,13 +27,21 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(comunidades))]
         public IHttpActionResult Getcomunidades(int id)
         {
-            comunidades comunidades = db.comunidades.Find(id);
-            if (comunidades == null)
-            {
-                return NotFound();
-            }
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
 
-            return Ok(comunidades);
+            comunidades _comunidad = (from c in db.comunidades
+                             where c.id == id
+                             select c).FirstOrDefault();
+            if (_comunidad == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_comunidad);
+            }
+            return result;
         }
 
         // PUT: api/Comunidades/5

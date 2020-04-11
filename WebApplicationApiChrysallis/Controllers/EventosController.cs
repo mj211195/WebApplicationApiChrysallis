@@ -204,7 +204,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
                 where e.id_comunidad == id_comunidad && e.fecha >= date
                 select e).ToList();
 

@@ -15,11 +15,11 @@
         <AssociationConnector Association="chrysallisModel.FK_asistir_eventos" />
         <AssociationConnector Association="chrysallisModel.FK_eventos_comunidades" />
         <AssociationConnector Association="chrysallisModel.notificaciones_eventos" />
-        <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="5.25" PointY="9.375" />
-        <AssociationConnector Association="chrysallisModel.FK_mensajes_eventos" />
-        <AssociationConnector Association="chrysallisModel.FK_mensajes_socios" />
         <EntityTypeShape EntityType="chrysallisModel.documentos" Width="1.5" PointX="5.25" PointY="16.25" />
         <AssociationConnector Association="chrysallisModel.FK_documentos_eventos" />
+        <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="5.25" PointY="8.375" />
+        <AssociationConnector Association="chrysallisModel.FK_mensajes_eventos" />
+        <AssociationConnector Association="chrysallisModel.FK_mensajes_socios" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
