@@ -44,15 +44,15 @@ namespace WebApplicationApiChrysallis.Controllers
             return result;
         }
 
-        // GET: api/Asistir/searchid
-        [ResponseType(typeof(eventos))]
-        public IHttpActionResult GetEventosApuntado(int id)
+        [HttpGet]
+        [Route("api/Eventos/SearchSocio/{id_socio}")]
+        public IHttpActionResult GetEventosApuntado(int id_socio)
         {
 
             asistir _asistir = new asistir();
             List<eventos> _evento = (
-                from a in db.asistir
-                where a.id_socio == id
+                from a in db.asistir.Include("comunidades").Include("asistir").Include("notificaciones")
+                where a.id_socio == id_socio
                 select a.eventos).ToList();
 
             if (_asistir == null)
@@ -146,12 +146,12 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Eventos/SearchNC/{nombre}/{id_comunidad}/{date}")]
-        public IHttpActionResult busquedaEventosNombreComunidad(String nombre,int id_comunidad, DateTime date)
+        public IHttpActionResult BusquedaEventosNombreComunidad(String nombre,int id_comunidad, DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
                 where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre) && e.fecha >= date
                 select e).ToList();
 
@@ -173,12 +173,12 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Eventos/SearchCD/{id_comunidad}/{date}")]
-        public IHttpActionResult busquedaEventosComDate(int id_comunidad, DateTime date)
+        public IHttpActionResult BusquedaEventosComDate(int id_comunidad, DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
                 where e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
@@ -196,12 +196,12 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Eventos/Search/{nombre}/{id_comunidad}/{date}")]
-        public IHttpActionResult busquedaEventosAll(String nombre, int id_comunidad, DateTime date)
+        public IHttpActionResult BusquedaEventosAll(String nombre, int id_comunidad, DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
                 where e.nombre.Contains(nombre) && e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
@@ -219,7 +219,7 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Eventos/SearchC/{id_comunidad}/{date}")]
-        public IHttpActionResult busquedaEventosComunidad(int id_comunidad, DateTime date)
+        public IHttpActionResult BusquedaEventosComunidad(int id_comunidad, DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
