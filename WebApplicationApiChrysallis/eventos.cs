@@ -18,9 +18,9 @@ namespace WebApplicationApiChrysallis
         public eventos()
         {
             this.asistir = new HashSet<asistir>();
-            this.notificaciones = new HashSet<notificaciones>();
             this.documentos = new HashSet<documentos>();
             this.mensajes = new HashSet<mensajes>();
+            this.notificaciones = new HashSet<notificaciones>();
         }
     
         public int id { get; set; }
@@ -30,7 +30,7 @@ namespace WebApplicationApiChrysallis
         public string ubicacion { get; set; }
         public System.TimeSpan hora { get; set; }
         public Nullable<System.DateTime> fechaLimite { get; set; }
-        public int numAsistentes { get; set; }
+        public Nullable<int> numAsistentes { get; set; }
         public string descripcion { get; set; }
         public string nombreImagen { get; set; }
         public int id_comunidad { get; set; }
@@ -39,10 +39,10 @@ namespace WebApplicationApiChrysallis
         public virtual ICollection<asistir> asistir { get; set; }
         public virtual comunidades comunidades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<notificaciones> notificaciones { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<documentos> documentos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mensajes> mensajes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<notificaciones> notificaciones { get; set; }
     }
 }

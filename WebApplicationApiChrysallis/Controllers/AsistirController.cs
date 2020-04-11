@@ -25,17 +25,39 @@ namespace WebApplicationApiChrysallis.Controllers
             return db.asistir;
         }
 
-        // GET: api/Asistir/5
-        [ResponseType(typeof(asistir))]
-        public IHttpActionResult Getasistir(int id)
-        {
-            asistir asistir = db.asistir.Find(id);
-            if (asistir == null)
-            {
-                return NotFound();
-            }
+        //// GET: api/Asistir/5
+        //[ResponseType(typeof(asistir))]
+        //public IHttpActionResult Getasistir(int id)
+        //{
+        //    asistir asistir = db.asistir.Find(id);
+        //    if (asistir == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(asistir);
+        //    return Ok(asistir);
+        //}
+
+        [HttpGet]
+        [Route("api/Asistir/{id_socio}/{id_evento}")]
+        public IHttpActionResult getAsistir(int id_socio, int id_evento)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<asistir> _asistir = (
+                from a in db.asistir
+                where a.id_socio == id_socio && a.id_evento == id_evento
+                select a).ToList();
+
+            if (_asistir == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_asistir);
+            }
+            return result;
         }
 
         // GET: api/Asistir/searchid
@@ -118,11 +140,37 @@ namespace WebApplicationApiChrysallis.Controllers
             return CreatedAtRoute("DefaultApi", new { id = asistir.id_socio }, asistir);
         }
 
-        // DELETE: api/Asistir/5
-        [ResponseType(typeof(asistir))]
-        public IHttpActionResult Deleteasistir(int id)
+        //// DELETE: api/Asistir/5
+        //[ResponseType(typeof(asistir))]
+        //public IHttpActionResult Deleteasistir(int id)
+        //{
+        //    asistir _asistir = db.asistir.Find(id);
+        //    String mensaje;
+        //    if (_asistir == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    db.asistir.Remove(_asistir);
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+        //        mensaje = Utilidad.MensajeError(sqlExc);
+        //        return BadRequest(mensaje);
+        //    }
+
+        //    return Ok(_asistir);
+        //}
+
+        [HttpDelete]
+        [Route("api/Asistir/{id_socio}/{id_evento}")]
+        public IHttpActionResult deleteAsistir(int id_socio, int id_evento)
         {
-            asistir _asistir = db.asistir.Find(id);
+            asistir _asistir = db.asistir.Find(id_socio,id_evento);
             String mensaje;
             if (_asistir == null)
             {

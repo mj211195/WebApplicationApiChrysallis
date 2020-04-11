@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="449b1c6c60c5492a9e7ac2c5d791107e" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="chrysallisModel.asistir" Width="1.5" PointX="7.875" PointY="6.125" />
-        <EntityTypeShape EntityType="chrysallisModel.comunidades" Width="1.5" PointX="0.75" PointY="8.375" />
-        <EntityTypeShape EntityType="chrysallisModel.notificaciones" Width="1.5" PointX="5.5" PointY="13" />
-        <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="3" PointY="4.75" />
-        <AssociationConnector Association="chrysallisModel.FK_asistir_socios" />
-        <AssociationConnector Association="chrysallisModel.FK_socios_comunidades" />
-        <EntityTypeShape EntityType="chrysallisModel.eventos" Width="1.5" PointX="3" PointY="10.25" />
+        <EntityTypeShape EntityType="chrysallisModel.asistir" Width="1.5" PointX="6.25" PointY="5" />
+        <EntityTypeShape EntityType="chrysallisModel.comunidades" Width="1.5" PointX="1.875" PointY="4.875" />
+        <EntityTypeShape EntityType="chrysallisModel.documentos" Width="1.5" PointX="1" PointY="7" />
+        <EntityTypeShape EntityType="chrysallisModel.eventos" Width="1.5" PointX="4" PointY="6.375" />
+        <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="8" PointY="4" />
+        <EntityTypeShape EntityType="chrysallisModel.notificaciones" Width="1.5" PointX="6" PointY="8.375" />
+        <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="4" PointY="1.5" />
         <AssociationConnector Association="chrysallisModel.FK_asistir_eventos" />
+        <AssociationConnector Association="chrysallisModel.FK_asistir_socios" />
         <AssociationConnector Association="chrysallisModel.FK_eventos_comunidades" />
-        <AssociationConnector Association="chrysallisModel.notificaciones_eventos" />
-        <EntityTypeShape EntityType="chrysallisModel.documentos" Width="1.5" PointX="5.25" PointY="16.25" />
+        <AssociationConnector Association="chrysallisModel.FK_socios_comunidades" />
         <AssociationConnector Association="chrysallisModel.FK_documentos_eventos" />
-        <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="5.25" PointY="8.375" />
         <AssociationConnector Association="chrysallisModel.FK_mensajes_eventos" />
         <AssociationConnector Association="chrysallisModel.FK_mensajes_socios" />
+        <AssociationConnector Association="chrysallisModel.notificaciones_eventos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
