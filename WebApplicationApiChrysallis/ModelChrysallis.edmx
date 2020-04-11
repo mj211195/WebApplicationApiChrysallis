@@ -43,7 +43,7 @@
           <Property Name="ubicacion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="hora" Type="time" Precision="7" Nullable="false" />
           <Property Name="fechaLimite" Type="date" />
-          <Property Name="numAsistentes" Type="int" Nullable="false" />
+          <Property Name="numAsistentes" Type="int" />
           <Property Name="descripcion" Type="varchar" MaxLength="300" />
           <Property Name="nombreImagen" Type="varchar" MaxLength="16" />
           <Property Name="id_comunidad" Type="int" Nullable="false" />
@@ -339,7 +339,7 @@
           <Property Name="ubicacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="hora" Type="Time" Nullable="false" Precision="7" />
           <Property Name="fechaLimite" Type="DateTime" Precision="0" />
-          <Property Name="numAsistentes" Type="Int32" Nullable="false" />
+          <Property Name="numAsistentes" Type="Int32" />
           <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="nombreImagen" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="id_comunidad" Type="Int32" Nullable="false" />

@@ -30,7 +30,7 @@ namespace WebApplicationApiChrysallis
         public string ubicacion { get; set; }
         public System.TimeSpan hora { get; set; }
         public Nullable<System.DateTime> fechaLimite { get; set; }
-        public int numAsistentes { get; set; }
+        public Nullable<int> numAsistentes { get; set; }
         public string descripcion { get; set; }
         public string nombreImagen { get; set; }
         public int id_comunidad { get; set; }
