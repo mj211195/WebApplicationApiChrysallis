@@ -44,6 +44,26 @@ namespace WebApplicationApiChrysallis.Controllers
             return result;
         }
 
+        // GET: api/Asistir/searchid
+        [ResponseType(typeof(eventos))]
+        public IHttpActionResult GetEventosApuntado(int id)
+        {
+
+            asistir _asistir = new asistir();
+            List<eventos> _evento = (
+                from a in db.asistir
+                where a.id_socio == id
+                select a.eventos).ToList();
+
+            if (_asistir == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(_evento);
+        }
+
         // PUT: api/Eventos/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Puteventos(int id, eventos eventos)
