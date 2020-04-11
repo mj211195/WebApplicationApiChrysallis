@@ -30,7 +30,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
 
-            eventos _evento = (from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
+            eventos _evento = (from e in db.eventos
                                where e.id == id
                              select e).FirstOrDefault();
             if (_evento == null)

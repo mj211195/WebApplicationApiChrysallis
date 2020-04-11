@@ -316,7 +316,6 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="socios" Relationship="chrysallisModel.FK_socios_comunidades" FromRole="comunidades" ToRole="socios" />
-          <NavigationProperty Name="eventos" Relationship="chrysallisModel.FK_eventos_comunidades" FromRole="comunidades" ToRole="eventos" />
         </EntityType>
         <EntityType Name="notificaciones">
           <Key>
@@ -345,7 +344,6 @@
           <Property Name="id_comunidad" Type="Int32" />
           <NavigationProperty Name="asistir" Relationship="chrysallisModel.FK_asistir_socios" FromRole="socios" ToRole="asistir" />
           <NavigationProperty Name="comunidades" Relationship="chrysallisModel.FK_socios_comunidades" FromRole="socios" ToRole="comunidades" />
-          <NavigationProperty Name="mensajes" Relationship="chrysallisModel.FK_mensajes_socios" FromRole="socios" ToRole="mensajes" />
         </EntityType>
         <Association Name="FK_asistir_socios">
           <End Type="chrysallisModel.socios" Role="socios" Multiplicity="1" />
