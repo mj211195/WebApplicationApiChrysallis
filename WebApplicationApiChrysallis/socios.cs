@@ -18,6 +18,7 @@ namespace WebApplicationApiChrysallis
         public socios()
         {
             this.asistir = new HashSet<asistir>();
+            this.mensajes = new HashSet<mensajes>();
         }
     
         public int id { get; set; }
@@ -37,5 +38,7 @@ namespace WebApplicationApiChrysallis
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<asistir> asistir { get; set; }
         public virtual comunidades comunidades { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mensajes> mensajes { get; set; }
     }
 }
