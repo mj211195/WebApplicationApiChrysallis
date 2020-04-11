@@ -48,20 +48,23 @@ namespace WebApplicationApiChrysallis.Controllers
         [Route("api/Eventos/SearchSocio/{id_socio}")]
         public IHttpActionResult GetEventosApuntado(int id_socio)
         {
-
-            asistir _asistir = new asistir();
-            List<eventos> _evento = (
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<eventos> _eventos = (
                 from a in db.asistir.Include("comunidades").Include("asistir").Include("notificaciones")
                 where a.id_socio == id_socio
                 select a.eventos).ToList();
 
-            if (_asistir == null)
+            if (_eventos == null)
             {
-                return NotFound();
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
             }
 
-
-            return Ok(_evento);
+            return result;
         }
 
         // PUT: api/Eventos/5
