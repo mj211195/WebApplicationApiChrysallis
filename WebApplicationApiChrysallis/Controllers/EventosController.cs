@@ -30,7 +30,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
 
-            eventos _evento = (from e in db.eventos
+            eventos _evento = (from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
                                where e.id == id
                              select e).FirstOrDefault();
             if (_evento == null)
@@ -51,9 +51,11 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from a in db.asistir.Include("comunidades").Include("asistir").Include("notificaciones")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
+                join c in db.comunidades on e.comunidades.id equals c.id
+                join a in db.asistir on e.id equals a.id_evento
                 where a.id_socio == id_socio
-                select a.eventos).ToList();
+                select e).ToList();
 
             if (_eventos == null)
             {

@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="chrysallisModel.eventos" Width="1.5" PointX="4" PointY="6.375" />
         <EntityTypeShape EntityType="chrysallisModel.mensajes" Width="1.5" PointX="8" PointY="4" />
         <EntityTypeShape EntityType="chrysallisModel.notificaciones" Width="1.5" PointX="6" PointY="8.375" />
-        <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="4" PointY="1.5" />
+        <EntityTypeShape EntityType="chrysallisModel.socios" Width="1.5" PointX="4" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="chrysallisModel.FK_asistir_eventos" />
         <AssociationConnector Association="chrysallisModel.FK_asistir_socios" />
         <AssociationConnector Association="chrysallisModel.FK_eventos_comunidades" />
