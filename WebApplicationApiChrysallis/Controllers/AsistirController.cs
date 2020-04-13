@@ -80,16 +80,52 @@ namespace WebApplicationApiChrysallis.Controllers
             return Ok(_evento);
         }
 
-        // PUT: api/Asistir/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putasistir(int id, asistir asistir)
+        //// PUT: api/Asistir/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult Putasistir(int id, asistir asistir)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != asistir.id_socio)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(asistir).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!asistirExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        [HttpPut]
+        [Route("api/Asistir/{id_socio}/{id_evento}")]
+        public IHttpActionResult PutAsistir(int id_socio, int id_evento, asistir asistir)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != asistir.id_socio)
+            if (id_socio != asistir.id_socio || id_evento != asistir.id_evento)
             {
                 return BadRequest();
             }
@@ -100,16 +136,24 @@ namespace WebApplicationApiChrysallis.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                if (!asistirExists(id))
+                if (!asistirExists(id_socio, id_evento))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
                 }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -201,9 +245,9 @@ namespace WebApplicationApiChrysallis.Controllers
             base.Dispose(disposing);
         }
 
-        private bool asistirExists(int id)
+        private bool asistirExists(int id_socio, int id_evento)
         {
-            return db.asistir.Count(e => e.id_socio == id) > 0;
+            return db.asistir.Count(e => e.id_socio == id_socio && e.id_evento == id_evento) > 0;
         }
     }
 }
