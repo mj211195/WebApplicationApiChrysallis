@@ -156,7 +156,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos>_eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
                 where e.id_comunidad == id_comunidad && e.nombre.Contains(nombre) && e.fecha >= date
                 select e).ToList();
 
@@ -183,7 +183,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
                 where e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
@@ -206,7 +206,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
                 where e.nombre.Contains(nombre) && e.id_comunidad == id_comunidad && e.fecha.Equals(date)
                 select e).ToList();
 
@@ -229,7 +229,7 @@ namespace WebApplicationApiChrysallis.Controllers
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
-                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
                 where e.id_comunidad == id_comunidad && e.fecha >= date
                 select e).ToList();
 
