@@ -158,28 +158,44 @@ namespace WebApplicationApiChrysallis.Controllers
         [Route("api/Socios/{telefono}/{password}")]
         public IHttpActionResult SocioLogin(String telefono,String password)
         {
+            IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
-
             socios _socio = (
                 from s in db.socios.Include("comunidades").Include("asistir")
                 where s.telefono.Equals(telefono) && s.password.Equals(password)
                 select s).FirstOrDefault();
 
-            return Ok(_socio);
+            if (_socio == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_socio);
+            }
+            return result;
         }
 
         [HttpGet]
         [Route("api/Socios/busquedaRecuperar/{mail}/{telefono}")]
         public IHttpActionResult SocioRecuperar(String mail,String telefono)
         {
+            IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
-
             socios _socio = (
                 from s in db.socios
                 where s.telefono.Equals(telefono) && s.mail.Equals(mail)
                 select s).FirstOrDefault();
 
-            return Ok(_socio);
+            if (_socio == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_socio);
+            }
+            return result;
         }
     }
 }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplicationApiChrysallis;
+using WebApplicationApiChrysallis.Utilidades;
 
 namespace WebApplicationApiChrysallis.Controllers
 {
@@ -49,6 +51,7 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult Putdocumentos(int id, documentos documentos)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -65,7 +68,7 @@ namespace WebApplicationApiChrysallis.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!documentosExists(id))
                 {
@@ -73,8 +76,16 @@ namespace WebApplicationApiChrysallis.Controllers
                 }
                 else
                 {
-                    throw;
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
                 }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -84,13 +95,23 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(documentos))]
         public IHttpActionResult Postdocumentos(documentos documentos)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             db.documentos.Add(documentos);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = documentos.id }, documentos);
         }
@@ -99,16 +120,25 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(documentos))]
         public IHttpActionResult Deletedocumentos(int id)
         {
-            documentos documentos = db.documentos.Find(id);
-            if (documentos == null)
+            documentos _documento = db.documentos.Find(id);
+            String mensaje;
+            if (_documento == null)
             {
                 return NotFound();
             }
 
-            db.documentos.Remove(documentos);
-            db.SaveChanges();
-
-            return Ok(documentos);
+            db.documentos.Remove(_documento);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+            return Ok(_documento);
         }
 
         protected override void Dispose(bool disposing)

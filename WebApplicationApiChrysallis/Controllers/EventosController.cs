@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplicationApiChrysallis;
+using WebApplicationApiChrysallis.Utilidades;
 
 namespace WebApplicationApiChrysallis.Controllers
 {
@@ -52,7 +54,6 @@ namespace WebApplicationApiChrysallis.Controllers
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
                 from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
-                join c in db.comunidades on e.comunidades.id equals c.id
                 join a in db.asistir on e.id equals a.id_evento
                 where a.id_socio == id_socio
                 select e).ToList();
@@ -73,6 +74,7 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult Puteventos(int id, eventos eventos)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -89,7 +91,7 @@ namespace WebApplicationApiChrysallis.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!eventosExists(id))
                 {
@@ -97,8 +99,16 @@ namespace WebApplicationApiChrysallis.Controllers
                 }
                 else
                 {
-                    throw;
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
                 }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -108,14 +118,23 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(eventos))]
         public IHttpActionResult Posteventos(eventos eventos)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             db.eventos.Add(eventos);
-            db.SaveChanges();
-
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
             return CreatedAtRoute("DefaultApi", new { id = eventos.id }, eventos);
         }
 
@@ -123,16 +142,26 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(eventos))]
         public IHttpActionResult Deleteeventos(int id)
         {
-            eventos eventos = db.eventos.Find(id);
-            if (eventos == null)
+            eventos _evento = db.eventos.Find(id);
+            String mensaje;
+            if (_evento == null)
             {
                 return NotFound();
             }
 
-            db.eventos.Remove(eventos);
-            db.SaveChanges();
+            db.eventos.Remove(_evento);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
 
-            return Ok(eventos);
+            return Ok(_evento);
         }
 
         protected override void Dispose(bool disposing)

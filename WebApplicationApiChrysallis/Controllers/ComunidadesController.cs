@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplicationApiChrysallis;
+using WebApplicationApiChrysallis.Utilidades;
 
 namespace WebApplicationApiChrysallis.Controllers
 {
@@ -33,6 +35,7 @@ namespace WebApplicationApiChrysallis.Controllers
             comunidades _comunidad = (from c in db.comunidades
                              where c.id == id
                              select c).FirstOrDefault();
+
             if (_comunidad == null)
             {
                 result = NotFound();
@@ -48,6 +51,7 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult Putcomunidades(int id, comunidades comunidades)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -64,7 +68,7 @@ namespace WebApplicationApiChrysallis.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!comunidadesExists(id))
                 {
@@ -72,8 +76,16 @@ namespace WebApplicationApiChrysallis.Controllers
                 }
                 else
                 {
-                    throw;
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
                 }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -83,14 +95,24 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(comunidades))]
         public IHttpActionResult Postcomunidades(comunidades comunidades)
         {
+            String mensaje;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             db.comunidades.Add(comunidades);
-            db.SaveChanges();
-
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+  
             return CreatedAtRoute("DefaultApi", new { id = comunidades.id }, comunidades);
         }
 
@@ -98,16 +120,26 @@ namespace WebApplicationApiChrysallis.Controllers
         [ResponseType(typeof(comunidades))]
         public IHttpActionResult Deletecomunidades(int id)
         {
-            comunidades comunidades = db.comunidades.Find(id);
-            if (comunidades == null)
+            comunidades _comunidad = db.comunidades.Find(id);
+            String mensaje;
+            if (_comunidad == null)
             {
                 return NotFound();
             }
 
-            db.comunidades.Remove(comunidades);
-            db.SaveChanges();
+            db.comunidades.Remove(_comunidad);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
 
-            return Ok(comunidades);
+            return Ok(_comunidad);
         }
 
         protected override void Dispose(bool disposing)
