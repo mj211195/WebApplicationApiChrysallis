@@ -44,10 +44,10 @@ namespace WebApplicationApiChrysallis.Controllers
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
-            List<asistir> _asistir = (
+            asistir _asistir = (
                 from a in db.asistir
                 where a.id_socio == id_socio && a.id_evento == id_evento
-                select a).ToList();
+                select a).FirstOrDefault();
 
             if (_asistir == null)
             {
