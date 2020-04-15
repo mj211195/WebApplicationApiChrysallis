@@ -54,8 +54,7 @@ namespace WebApplicationApiChrysallis.Controllers
             db.Configuration.LazyLoadingEnabled = false;
             List<eventos> _eventos = (
                 from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones")
-                join a in db.asistir on e.id equals a.id_evento
-                where a.id_socio == id_socio
+                where e.asistir.Any(a => a.id_socio == id_socio)
                 select e).ToList();
 
             if (_eventos == null)
