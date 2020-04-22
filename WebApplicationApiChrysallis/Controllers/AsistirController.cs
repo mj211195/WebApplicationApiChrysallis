@@ -294,7 +294,7 @@ namespace WebApplicationApiChrysallis.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/Asistir/eliminar/{id_socio}/{id_evento}")]
         public IHttpActionResult eliminarAsistir(int id_socio, int id_evento)
         {
@@ -317,7 +317,7 @@ namespace WebApplicationApiChrysallis.Controllers
                 return BadRequest(mensaje);
             }
 
-            return Ok(_asistir);
+            return Ok("Baja confirmada");
         }
     }
 }
