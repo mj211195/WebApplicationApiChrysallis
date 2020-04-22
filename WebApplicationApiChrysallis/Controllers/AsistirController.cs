@@ -249,5 +249,75 @@ namespace WebApplicationApiChrysallis.Controllers
         {
             return db.asistir.Count(e => e.id_socio == id_socio && e.id_evento == id_evento) > 0;
         }
+
+        [HttpPost]
+        [Route("api/Asistir/modificar/{id_socio}/{id_evento}")]
+        public IHttpActionResult modificarAsistir(int id_socio, int id_evento, asistir asistir)
+        {
+            String mensaje;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id_socio != asistir.id_socio || id_evento != asistir.id_evento)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(asistir).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (!asistirExists(id_socio, id_evento))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Route("api/Asistir/eliminar/{id_socio}/{id_evento}")]
+        public IHttpActionResult eliminarAsistir(int id_socio, int id_evento)
+        {
+            asistir _asistir = db.asistir.Find(id_socio, id_evento);
+            String mensaje;
+            if (_asistir == null)
+            {
+                return NotFound();
+            }
+
+            db.asistir.Remove(_asistir);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+
+            return Ok(_asistir);
+        }
     }
 }

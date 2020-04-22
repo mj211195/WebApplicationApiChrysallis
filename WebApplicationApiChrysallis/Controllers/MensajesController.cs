@@ -172,5 +172,34 @@ namespace WebApplicationApiChrysallis.Controllers
             }
             return result;
         }
+
+
+
+
+        [HttpPost]
+        [Route("api/Mensajes/eliminar/{id}")]
+        public IHttpActionResult eliminarMensaje(int id)
+        {
+            mensajes _mensaje = db.mensajes.Find(id);
+            String mensaje;
+            if (_mensaje == null)
+            {
+                return NotFound();
+            }
+
+            db.mensajes.Remove(_mensaje);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+
+            return Ok(_mensaje);
+        }
     }
 }

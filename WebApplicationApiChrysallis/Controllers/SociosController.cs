@@ -197,5 +197,50 @@ namespace WebApplicationApiChrysallis.Controllers
             }
             return result;
         }
+
+        // PUT: api/Socios/5
+        [HttpPost]
+        [Route("api/Socios/modificar/{id}")]
+        public IHttpActionResult modificarSocios(int id, socios socios)
+        {
+            String mensaje;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != socios.id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(socios).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (!sociosExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                    mensaje = Utilidad.MensajeError(sqlExc);
+                    return BadRequest(mensaje);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }
