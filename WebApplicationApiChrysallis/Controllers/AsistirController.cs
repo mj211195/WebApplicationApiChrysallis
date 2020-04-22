@@ -60,6 +60,33 @@ namespace WebApplicationApiChrysallis.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("api/Asistir/total/{id_evento}")]
+        public IHttpActionResult getAsistentes(int id_evento)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<asistir> _asistir = (
+                from a in db.asistir
+                where a.id_evento == id_evento
+                select a).ToList();
+            int total = 0;
+            foreach(asistir a in _asistir)
+            {
+                total += a.cuantos;
+            }
+
+            if (_asistir == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(total);
+            }
+            return result;
+        }
+
         //// GET: api/Asistir/searchid
         //[ResponseType(typeof(asistir))]
         //public IHttpActionResult GetEventosApuntado(int id)
