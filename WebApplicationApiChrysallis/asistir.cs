@@ -19,6 +19,7 @@ namespace WebApplicationApiChrysallis
         public Nullable<int> valoracion { get; set; }
         public string comentario { get; set; }
         public int cuantos { get; set; }
+        public string codigo_asistir { get; set; }
     
         public virtual eventos eventos { get; set; }
         public virtual socios socios { get; set; }

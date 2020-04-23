@@ -346,5 +346,31 @@ namespace WebApplicationApiChrysallis.Controllers
 
             return Ok("Baja confirmada");
         }
+
+        [HttpGet]
+        [Route("api/Asistir/eliminar/{codigo_asistir}")]
+        public IHttpActionResult eliminarAsistirByCOdigo(String codigo_asistir)
+        {
+            asistir _asistir = db.asistir.Find(codigo_asistir);
+            String mensaje;
+            if (_asistir == null)
+            {
+                return NotFound();
+            }
+
+            db.asistir.Remove(_asistir);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
+                mensaje = Utilidad.MensajeError(sqlExc);
+                return BadRequest(mensaje);
+            }
+
+            return Ok("Baja confirmada");
+        }
     }
 }
