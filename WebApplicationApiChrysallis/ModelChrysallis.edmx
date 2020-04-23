@@ -14,6 +14,7 @@
           <Property Name="id_evento" Type="int" Nullable="false" />
           <Property Name="valoracion" Type="int" />
           <Property Name="comentario" Type="varchar" MaxLength="100" />
+          <Property Name="codigo_asistir" Type="varchar" MaxLength="20" />
           <Property Name="cuantos" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="comunidades">
@@ -308,6 +309,7 @@
           <Property Name="cuantos" Type="Int32" Nullable="false" />
           <NavigationProperty Name="eventos" Relationship="chrysallisModel.FK_asistir_eventos" FromRole="asistir" ToRole="eventos" />
           <NavigationProperty Name="socios" Relationship="chrysallisModel.FK_asistir_socios" FromRole="asistir" ToRole="socios" />
+          <Property Name="codigo_asistir" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="comunidades">
           <Key>
@@ -489,6 +491,7 @@
           <EntitySetMapping Name="asistir">
             <EntityTypeMapping TypeName="chrysallisModel.asistir">
               <MappingFragment StoreEntitySet="asistir">
+                <ScalarProperty Name="codigo_asistir" ColumnName="codigo_asistir" />
                 <ScalarProperty Name="cuantos" ColumnName="cuantos" />
                 <ScalarProperty Name="comentario" ColumnName="comentario" />
                 <ScalarProperty Name="valoracion" ColumnName="valoracion" />
