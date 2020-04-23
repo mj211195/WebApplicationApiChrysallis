@@ -69,6 +69,29 @@ namespace WebApplicationApiChrysallis.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("api/Eventos/SearchChat/{id_socio}")]
+        public IHttpActionResult GetEventosChat(int id_socio, DateTime date)
+        {
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+            List<eventos> _eventos = (
+                from e in db.eventos.Include("comunidades").Include("asistir").Include("notificaciones").Include("mensajes")
+                where e.asistir.Any(a => a.id_socio == id_socio) && e.fecha >= date
+                select e).ToList();
+
+            if (_eventos == null)
+            {
+                result = NotFound();
+            }
+            else
+            {
+                result = Ok(_eventos);
+            }
+
+            return result;
+        }
+
         // PUT: api/Eventos/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Puteventos(int id, eventos eventos)
@@ -179,7 +202,7 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Eventos/SearchNC/{nombre}/{id_comunidad}/{date}")]
-        public IHttpActionResult BusquedaEventosNombreComunidad(String nombre,int id_comunidad, DateTime date)
+        public IHttpActionResult BusquedaEventosNombreComunidad(String nombre,int id_comunidad,DateTime date)
         {
             IHttpActionResult result;
             db.Configuration.LazyLoadingEnabled = false;
