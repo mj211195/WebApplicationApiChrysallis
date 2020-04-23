@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplicationApiChrysallis;
@@ -349,13 +350,20 @@ namespace WebApplicationApiChrysallis.Controllers
 
         [HttpGet]
         [Route("api/Asistir/eliminar/{codigo_asistir}")]
-        public IHttpActionResult eliminarAsistirByCOdigo(String codigo_asistir)
+        public HttpResponseMessage eliminarAsistirByCodigo(String codigo_asistir)
         {
-            asistir _asistir = db.asistir.Find(codigo_asistir);
+
+            var response = new HttpResponseMessage();
+            asistir _asistir = (
+                from a in db.asistir
+                where a.codigo_asistir.Equals(codigo_asistir)
+                select a).FirstOrDefault();
             String mensaje;
             if (_asistir == null)
             {
-                return NotFound();
+                response.Content = new StringContent("<html><body>No se ha encontrado la asistencia</body></html>");
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+                return response;
             }
 
             db.asistir.Remove(_asistir);
@@ -367,10 +375,15 @@ namespace WebApplicationApiChrysallis.Controllers
             {
                 SqlException sqlExc = (SqlException)ex.InnerException.InnerException;
                 mensaje = Utilidad.MensajeError(sqlExc);
-                return BadRequest(mensaje);
-            }
 
-            return Ok("Baja confirmada");
+                response.Content = new StringContent("<html><body>Error al conectarse con la base de datos - " + mensaje + "</body></html>");
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+                return response;
+            }
+            response.Content = new StringContent("<html><body><img style=\"display: block; margin-left: auto; margin-right: auto; \"src=\"https://chrysallis.org.es/wp-content/uploads/2020/03/cropped-LOGOCHRYSALLIS_peque%C3%B1o.png\" alt=\"logo\" width=\"176\" height=\"171\"/><h1 style = \"text-align: center;\"><span style = \"color: #000080;\"><strong> Baja confirmada </strong></span></h1><h1 style = \"text-align: center;\" ><span style = \"color: #000080;\"><strong> Baixa confirmada </strong ></span></h1><h1 style = \"text-align: center;\"><span style = \"color: #000080;\"><strong> Unsubscribe confirmation </strong></span><h1 style = \"text-align: center;\"><span style = \"color: #000080;\"><strong> Baxua baieztatu da</strong></span></h1><h1 style = \"text-align: center;\"><span style = \"color: #000080;\"><strong> Baixo confirmado </strong></span></h1></body></html>");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return response;
+            //return Ok("Baja confirmada");
         }
     }
 }
