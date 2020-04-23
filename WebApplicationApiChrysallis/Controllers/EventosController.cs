@@ -70,7 +70,7 @@ namespace WebApplicationApiChrysallis.Controllers
         }
 
         [HttpGet]
-        [Route("api/Eventos/SearchChat/{id_socio}")]
+        [Route("api/Eventos/SearchChat/{id_socio}/{date}")]
         public IHttpActionResult GetEventosChat(int id_socio, DateTime date)
         {
             IHttpActionResult result;
